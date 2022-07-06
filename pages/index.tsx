@@ -3,6 +3,7 @@ import { Canvas } from "@react-three/fiber";
 import { NextPage } from "next";
 import Page from "../components/Page";
 import Hexagon from "../components/r3f/hexagon/Hexagon";
+import HexagonGrid from "../components/r3f/hexagon/HexagonGrid";
 
 const Index: NextPage = () => {
   return (
@@ -18,7 +19,7 @@ const Index: NextPage = () => {
         <axesHelper />
         <Stats />
 
-        <Hexagon />
+        <HexagonGrid />
       </Canvas>
     </Page>
   );

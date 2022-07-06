@@ -21,6 +21,7 @@
     "@react-three/drei": "^9.16.0",
     "@react-three/fiber": "^8.0.27",
     "framer-motion": "^6.0.0",
+    "honeycomb-grid": "^3.1.8",
     "next": "12.2.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
