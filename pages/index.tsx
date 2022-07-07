@@ -9,7 +9,7 @@ const Index: NextPage = () => {
   return (
     <Page title="light" description="">
       <Canvas
-        camera={{ position: [10, 10, 10] }}
+        camera={{ position: [128, 64, 0] }}
         style={{ height: "100vh", backgroundColor: "black" }}
       >
         <ambientLight intensity={1} />
