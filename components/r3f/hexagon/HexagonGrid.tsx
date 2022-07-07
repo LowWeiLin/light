@@ -6,9 +6,6 @@ import * as THREE from "three";
 import interpolate from "color-interpolate";
 import colorstring from "color-string";
 
-const colorMap = ["#0000FF", "#00FF00", "#FF0000"];
-const interpolatedColorMap = interpolate(colorMap);
-
 const Hex = extendHex({
   orientation: "pointy",
 });
@@ -22,6 +19,13 @@ const noiseRoughness = 0.05;
 const noiseMagnitude = 5;
 const noiseSpeed = 0.3;
 
+const colorMap = ["#0000FF", "#00FF00", "#FF0000"];
+const colorSteps = 10;
+const interpolatedColorMap = interpolate(colorMap);
+
+const stepFn = (num: number, steps: number) =>
+  Math.floor(num * steps) / (steps - 1);
+
 // re-use for instance computations
 const tempObject3D = new THREE.Object3D();
 const tempColor = new THREE.Color();
@@ -34,7 +38,7 @@ const HexagonGrid = () => {
       Float32Array.from(
         new Array(grid.length)
           .fill(0)
-          .flatMap((_, i) =>
+          .flatMap(() =>
             tempColor
               .set(colorMap[Math.floor(Math.random() * colorMap.length)])
               .toArray()
@@ -60,9 +64,8 @@ const HexagonGrid = () => {
       hexGridMeshRef.current.setMatrixAt(index, tempObject3D.matrixWorld);
 
       // Color
-      const [r, g, b] = colorstring.get.rgb(
-        interpolatedColorMap((noise + 1) / 2)
-      );
+      const colorStep = stepFn((noise + 1) / 2, colorSteps);
+      const [r, g, b] = colorstring.get.rgb(interpolatedColorMap(colorStep));
       tempColor
         .setRGB(r / 255.0, g / 255.0, b / 255.0)
         .toArray(colorArray, index * 3);
