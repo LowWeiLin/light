@@ -1,23 +1,24 @@
 import { useMemo, useRef } from "react";
-import { defineGrid, extendHex } from "honeycomb-grid";
+import { defineGrid, extendHex, Hex } from "honeycomb-grid";
 import SimplexNoise from "simplex-noise";
-import { useFrame } from "@react-three/fiber";
+import { ThreeEvent, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import interpolate from "color-interpolate";
 import colorstring from "color-string";
 
-const Hex = extendHex({
-  orientation: "pointy",
-});
-const Grid = defineGrid(Hex);
+const Grid = defineGrid(
+  extendHex({
+    orientation: "pointy",
+  })
+);
 const simplex = new SimplexNoise();
 
-const hexSize = 0.9;
+const hexSize = 0.95;
 const hexHeight = 0.2;
 
-const noiseRoughness = 0.05;
-const noiseMagnitude = 5;
-const noiseSpeed = 0.3;
+const noiseRoughness = 0.025;
+const noiseMagnitude = 20;
+const noiseSpeed = 0.05;
 
 const colorMap = ["#0000FF", "#00FF00", "#FF0000"];
 const colorSteps = 10;
@@ -32,7 +33,9 @@ const tempColor = new THREE.Color();
 
 const HexagonGrid = () => {
   const hexGridMeshRef = useRef<THREE.InstancedMesh>(null);
-  const grid = useMemo(() => Grid.hexagon({ radius: 64 }), []);
+  const selectedHex = useRef<number>();
+  const ringHexes = useRef<Set<string>>(new Set());
+  const grid = useMemo(() => Grid.spiral({ radius: 64 }), []);
   const colorArray = useMemo(
     () =>
       Float32Array.from(
@@ -56,16 +59,29 @@ const HexagonGrid = () => {
         point.y * noiseRoughness,
         elapsedTime * noiseSpeed
       );
-      const height = noiseMagnitude * noise;
+      const normNoise = (noise + 1) / 2;
+      let height = noiseMagnitude * normNoise;
+      if (index === 0 || index === selectedHex.current) {
+        height = noiseMagnitude * 2;
+      }
 
       // Transform
-      tempObject3D.position.set(point.x, height, point.y);
+      tempObject3D.position.set(point.x, height / 2, point.y);
+      tempObject3D.scale.y = (1 / hexHeight) * height;
       tempObject3D.updateMatrixWorld();
       hexGridMeshRef.current.setMatrixAt(index, tempObject3D.matrixWorld);
 
       // Color
-      const colorStep = stepFn((noise + 1) / 2, colorSteps);
-      const [r, g, b] = colorstring.get.rgb(interpolatedColorMap(colorStep));
+      const colorStep = stepFn(normNoise, colorSteps);
+      let [r, g, b] = colorstring.get.rgb(interpolatedColorMap(colorStep));
+      if (
+        index === 0 ||
+        index === selectedHex.current ||
+        ringHexes.current.has(hex.toString())
+      ) {
+        [r, g, b] = [2550, 2550, 2550];
+      }
+
       tempColor
         .setRGB(r / 255.0, g / 255.0, b / 255.0)
         .toArray(colorArray, index * 3);
@@ -76,10 +92,27 @@ const HexagonGrid = () => {
     hexGridMeshRef.current.geometry.attributes.color.needsUpdate = true;
   });
 
+  const handleClick = (event: ThreeEvent<MouseEvent>) => {
+    event.stopPropagation();
+    if (selectedHex.current === event.instanceId) {
+      selectedHex.current = undefined;
+      ringHexes.current = new Set();
+    } else {
+      const hex = grid[event.instanceId];
+      selectedHex.current = event.instanceId;
+      ringHexes.current = new Set(
+        Grid.ring({ radius: 7, center: hex.coordinates() }).map((x) =>
+          x.toString()
+        )
+      );
+    }
+  };
+
   return (
     <instancedMesh
       ref={hexGridMeshRef}
       args={[undefined, undefined, grid.length]}
+      onClick={handleClick}
     >
       <cylinderBufferGeometry args={[hexSize, hexSize, hexHeight, 6]}>
         <instancedBufferAttribute
@@ -87,7 +120,7 @@ const HexagonGrid = () => {
           args={[colorArray, 3]}
         />
       </cylinderBufferGeometry>
-      <meshBasicMaterial toneMapped={false} vertexColors={THREE.VertexColors} />
+      <meshPhongMaterial toneMapped={false} vertexColors={THREE.VertexColors} />
     </instancedMesh>
   );
 };
