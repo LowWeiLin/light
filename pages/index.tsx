@@ -8,12 +8,10 @@ import HexagonGrid from "../components/r3f/hexagon/HexagonGrid";
 const Index: NextPage = () => {
   return (
     <Page title="light" description="">
-      <Canvas
-        camera={{ position: [128, 64, 0] }}
-        style={{ height: "100vh", backgroundColor: "black" }}
-      >
-        <ambientLight intensity={1} />
-        <pointLight intensity={1} position={[0, 6, 0]} />
+      <Canvas camera={{ position: [128, 64, 0] }} style={{ height: "100vh" }}>
+        <color attach="background" args={["#000000"]} />
+        <ambientLight />
+        <pointLight position={[150, 150, 150]} intensity={0.55} />
 
         <OrbitControls />
         <axesHelper />
