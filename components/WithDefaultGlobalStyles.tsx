@@ -1,5 +1,6 @@
-import { css, Global } from "@emotion/react";
 import React from "react";
+
+import { css, Global } from "@emotion/react";
 
 const globalStyles = css`
   html,
@@ -31,13 +32,11 @@ type WithDefaultGlobalStylesProps = {
 };
 const WithDefaultGlobalStyles: React.FC<WithDefaultGlobalStylesProps> = ({
   children,
-}) => {
-  return (
-    <>
-      <Global styles={globalStyles} />
-      {children}
-    </>
-  );
-};
+}) => (
+  <>
+    <Global styles={globalStyles} />
+    {children}
+  </>
+);
 
 export default WithDefaultGlobalStyles;

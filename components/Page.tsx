@@ -1,5 +1,7 @@
-import Head from "next/head";
 import React from "react";
+
+import Head from "next/head";
+
 import WithDefaultGlobalStyles from "./WithDefaultGlobalStyles";
 
 type PageProps = {
@@ -7,17 +9,15 @@ type PageProps = {
   description: string;
   children: React.ReactNode;
 };
-const Page: React.FC<PageProps> = ({ title, description, children }) => {
-  return (
-    <WithDefaultGlobalStyles>
-      <Head>
-        <title>{title}</title>
-        <meta name="description" content={description} />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      {children}
-    </WithDefaultGlobalStyles>
-  );
-};
+const Page: React.FC<PageProps> = ({ title, description, children }) => (
+  <WithDefaultGlobalStyles>
+    <Head>
+      <title>{title}</title>
+      <meta name="description" content={description} />
+      <link rel="icon" href="/favicon.ico" />
+    </Head>
+    {children}
+  </WithDefaultGlobalStyles>
+);
 
 export default Page;

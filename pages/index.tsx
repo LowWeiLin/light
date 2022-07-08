@@ -1,11 +1,10 @@
-import { OrbitControls, Stats } from "@react-three/drei";
+import { OrbitControls, Stats, Effects } from "@react-three/drei";
 import { Canvas, extend, useThree } from "@react-three/fiber";
 import { NextPage } from "next";
+import { SSAOPass, UnrealBloomPass } from "three-stdlib";
+
 import Page from "../components/Page";
 import HexagonGrid from "../components/r3f/hexagon/HexagonGrid";
-
-import { Effects } from "@react-three/drei";
-import { SSAOPass, UnrealBloomPass } from "three-stdlib";
 
 extend({ SSAOPass, UnrealBloomPass });
 
@@ -19,23 +18,21 @@ const PostProcessing = () => {
   );
 };
 
-const Index: NextPage = () => {
-  return (
-    <Page title="light" description="">
-      <Canvas camera={{ position: [128, 64, 0] }} style={{ height: "100vh" }}>
-        <color attach="background" args={["#000000"]} />
-        <ambientLight intensity={0.5} />
-        <pointLight position={[150, 150, 150]} intensity={0.55} />
+const Index: NextPage = () => (
+  <Page title="light" description="">
+    <Canvas camera={{ position: [128, 64, 0] }} style={{ height: "100vh" }}>
+      <color attach="background" args={["#000000"]} />
+      <ambientLight intensity={0.5} />
+      <pointLight position={[150, 150, 150]} intensity={0.55} />
 
-        <HexagonGrid />
+      <HexagonGrid />
 
-        <OrbitControls />
-        <Stats />
+      <OrbitControls />
+      <Stats />
 
-        <PostProcessing />
-      </Canvas>
-    </Page>
-  );
-};
+      <PostProcessing />
+    </Canvas>
+  </Page>
+);
 
 export default Index;

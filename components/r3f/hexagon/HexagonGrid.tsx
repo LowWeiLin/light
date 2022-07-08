@@ -1,10 +1,11 @@
 import { useMemo, useRef } from "react";
-import { defineGrid, extendHex, Hex } from "honeycomb-grid";
-import SimplexNoise from "simplex-noise";
+
 import { ThreeEvent, useFrame } from "@react-three/fiber";
-import * as THREE from "three";
 import interpolate from "color-interpolate";
 import colorstring from "color-string";
+import { defineGrid, extendHex } from "honeycomb-grid";
+import SimplexNoise from "simplex-noise";
+import * as THREE from "three";
 
 const Grid = defineGrid(
   extendHex({
