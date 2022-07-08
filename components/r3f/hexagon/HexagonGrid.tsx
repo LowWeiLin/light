@@ -2,8 +2,8 @@ import { useMemo, useRef } from "react";
 
 import { ThreeEvent, useFrame } from "@react-three/fiber";
 import interpolate from "color-interpolate";
-import colorstring from "color-string";
 import { defineGrid, extendHex } from "honeycomb-grid";
+import _ from "lodash";
 import SimplexNoise from "simplex-noise";
 import * as THREE from "three";
 
@@ -24,6 +24,7 @@ const noiseSpeed = 0.05;
 const colorMap = ["#0000FF", "#00FF00", "#FF0000"];
 const colorSteps = 10;
 const interpolatedColorMap = interpolate(colorMap);
+const interpolatedColorMapMemo = _.memoize(interpolatedColorMap);
 
 const stepFn = (num: number, steps: number) =>
   Math.floor(num * steps) / (steps - 1);
@@ -53,6 +54,9 @@ const HexagonGrid = () => {
 
   useFrame(({ clock }) => {
     const elapsedTime = clock.getElapsedTime();
+    if (hexGridMeshRef.current === null) {
+      return;
+    }
     grid.forEach((hex, index) => {
       const point = hex.toPoint();
       const noise = simplex.noise3D(
@@ -70,22 +74,22 @@ const HexagonGrid = () => {
       tempObject3D.position.set(point.x, height / 2, point.y);
       tempObject3D.scale.y = (1 / hexHeight) * height;
       tempObject3D.updateMatrixWorld();
-      hexGridMeshRef.current.setMatrixAt(index, tempObject3D.matrixWorld);
+      hexGridMeshRef.current?.setMatrixAt(index, tempObject3D.matrixWorld);
 
       // Color
-      const colorStep = stepFn(normNoise, colorSteps);
-      let [r, g, b] = colorstring.get.rgb(interpolatedColorMap(colorStep));
       if (
         index === 0 ||
         index === selectedHex.current ||
         ringHexes.current.has(hex.toString())
       ) {
-        [r, g, b] = [2550, 2550, 2550];
+        tempColor.setRGB(10, 10, 10);
+      } else {
+        const colorStep = stepFn(normNoise, colorSteps);
+        tempColor
+          .set(interpolatedColorMapMemo(colorStep))
+          .convertLinearToSRGB();
       }
-
-      tempColor
-        .setRGB(r / 255.0, g / 255.0, b / 255.0)
-        .toArray(colorArray, index * 3);
+      tempColor.toArray(colorArray, index * 3);
     });
 
     hexGridMeshRef.current.count = grid.length;

@@ -22,7 +22,6 @@
     "@react-three/drei": "^9.16.0",
     "@react-three/fiber": "^8.0.27",
     "color-interpolate": "^1.0.5",
-    "color-string": "^1.9.1",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jsx-a11y": "^6.6.0",
@@ -31,6 +30,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "framer-motion": "^6.0.0",
     "honeycomb-grid": "^3.1.8",
+    "lodash": "^4.17.21",
     "next": "12.2.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -40,7 +40,6 @@
   },
   "devDependencies": {
     "@emotion/babel-plugin": "^11.0.0",
-    "@types/color-string": "^1.5.2",
     "@types/node": "18.0.1",
     "@types/react": "18.0.14",
     "@types/react-dom": "18.0.5",
