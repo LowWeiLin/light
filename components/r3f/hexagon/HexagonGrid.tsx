@@ -7,6 +7,8 @@ import _ from "lodash";
 import SimplexNoise from "simplex-noise";
 import * as THREE from "three";
 
+import { useClickNoDrag } from "../utils/utils";
+
 const Grid = defineGrid(
   extendHex({
     orientation: "pointy",
@@ -98,7 +100,7 @@ const HexagonGrid = () => {
   });
 
   const handleClick = (event: ThreeEvent<MouseEvent>) => {
-    if (!event.instanceId) {
+    if (event.instanceId === undefined) {
       return;
     }
     event.stopPropagation();
@@ -116,11 +118,15 @@ const HexagonGrid = () => {
     }
   };
 
+  const { handlePointerDownWrapped, handleClickNoDrag } =
+    useClickNoDrag(handleClick);
+
   return (
     <instancedMesh
       ref={hexGridMeshRef}
       args={[undefined, undefined, grid.length]}
-      onClick={handleClick}
+      onClick={handleClickNoDrag}
+      onPointerDown={handlePointerDownWrapped}
     >
       <cylinderBufferGeometry args={[hexSize, hexSize, hexHeight, 6]}>
         <instancedBufferAttribute

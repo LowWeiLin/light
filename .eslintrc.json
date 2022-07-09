@@ -17,6 +17,8 @@
       { "namedComponents": "arrow-function" }
     ],
     "react/jsx-filename-extension": [1, { "extensions": [".tsx", ".jsx"] }],
+    "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+    "no-shadow": ["error", { "allow": ["_"] }],
     "import/extensions": ["error", "never"],
     "import/order": [
       "error",
