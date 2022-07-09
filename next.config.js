@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  basePath: "/light",
+  basePath: process.env.NODE_ENV === "development" ? "" : "/light",
   reactStrictMode: true,
   webpackDevMiddleware: (config) => {
     // eslint-disable-next-line no-param-reassign

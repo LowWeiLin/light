@@ -1,8 +1,9 @@
 import React from "react";
 
-import { OrbitControls, Stats, Effects } from "@react-three/drei";
+import { OrbitControls, Effects } from "@react-three/drei";
 import { Canvas, extend, useThree } from "@react-three/fiber";
 import { NextPage } from "next";
+import { Perf } from "r3f-perf";
 import { SSAOPass, UnrealBloomPass } from "three-stdlib";
 
 import Page from "../components/Page";
@@ -39,7 +40,7 @@ const Index: NextPage = () => (
       <HexagonGrid />
 
       <OrbitControls />
-      <Stats />
+      <Perf />
 
       <PostProcessing />
     </Canvas>
