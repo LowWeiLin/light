@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  basePath: "/light",
   reactStrictMode: true,
   webpackDevMiddleware: (config) => {
     // eslint-disable-next-line no-param-reassign
