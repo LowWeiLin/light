@@ -8,6 +8,15 @@ import HexagonGrid from "../components/r3f/hexagon/HexagonGrid";
 
 extend({ SSAOPass, UnrealBloomPass });
 
+declare global {
+  export namespace JSX {
+    export interface IntrinsicElements {
+      sSAOPass: any;
+      unrealBloomPass: any;
+    }
+  }
+}
+
 const PostProcessing = () => {
   const { scene, camera } = useThree();
   return (

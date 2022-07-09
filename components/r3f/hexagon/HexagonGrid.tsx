@@ -98,6 +98,9 @@ const HexagonGrid = () => {
   });
 
   const handleClick = (event: ThreeEvent<MouseEvent>) => {
+    if (!event.instanceId) {
+      return;
+    }
     event.stopPropagation();
     if (selectedHex.current === event.instanceId) {
       selectedHex.current = undefined;
@@ -125,7 +128,7 @@ const HexagonGrid = () => {
           args={[colorArray, 3]}
         />
       </cylinderBufferGeometry>
-      <meshPhongMaterial toneMapped={false} vertexColors={THREE.VertexColors} />
+      <meshPhongMaterial toneMapped={false} vertexColors />
     </instancedMesh>
   );
 };
