@@ -1,6 +1,6 @@
 # light
 
-🎉 Congratulations, your project was successfully bootstrapped with [Create Next Stack](https://github.com/akd-io/create-next-stack)!
+This project was bootstrapped with [Create Next Stack](https://github.com/akd-io/create-next-stack)!
 
 To get started, run:
 
@@ -10,7 +10,7 @@ yarn dev
 
 ## Scripts
 
-The table below provides names and descriptions of the npm scripts available in this project.
+The table below provides names and descriptions of the scripts available in this project.
 
 Each script is run using `yarn <script-name>`. For example: `yarn dev`.
 
@@ -18,6 +18,7 @@ Each script is run using `yarn <script-name>`. For example: `yarn dev`.
 | -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `dev`          | Runs the Next.js development server.                                                                                                                                                                                 |
 | `build`        | Generates a production build.                                                                                                                                                                                        |
+| `export`       | Exports the build.                                                                                                                                                                                                   |
 | `start`        | Runs the Next.js production server built using `build` script.                                                                                                                                                       |
 | `lint`         | Runs [ESLint](https://eslint.org/) to catch linting errors in the source code.                                                                                                                                       |
 | `format`       | Formats all source code in the project.                                                                                                                                                                              |
