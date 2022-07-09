@@ -1,4 +1,4 @@
-import { useMemo, useRef } from "react";
+import React, { useMemo, useRef } from "react";
 
 import { ThreeEvent, useFrame } from "@react-three/fiber";
 import interpolate from "color-interpolate";

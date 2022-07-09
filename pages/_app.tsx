@@ -1,3 +1,5 @@
+import React from "react";
+
 import { ChakraProvider, ColorModeProvider } from "@chakra-ui/react";
 import { AppProps } from "next/app";
 

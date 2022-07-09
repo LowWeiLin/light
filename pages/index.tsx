@@ -1,3 +1,5 @@
+import React from "react";
+
 import { OrbitControls, Stats, Effects } from "@react-three/drei";
 import { Canvas, extend, useThree } from "@react-three/fiber";
 import { NextPage } from "next";

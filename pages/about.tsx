@@ -1,3 +1,5 @@
+import React from "react";
+
 import { NextPage } from "next";
 
 import Page from "../components/Page";
