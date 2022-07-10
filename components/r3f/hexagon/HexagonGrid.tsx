@@ -3,6 +3,7 @@ import React, { useMemo, useRef } from "react";
 import { ThreeEvent, useFrame } from "@react-three/fiber";
 import interpolate from "color-interpolate";
 import { defineGrid, extendHex } from "honeycomb-grid";
+import { useControls } from "leva";
 import _ from "lodash";
 import SimplexNoise from "simplex-noise";
 import * as THREE from "three";
@@ -16,14 +17,7 @@ const Grid = defineGrid(
 );
 const simplex = new SimplexNoise();
 
-const hexSize = 0.95;
-const hexHeight = 0.2;
-
-const noiseRoughness = 0.025;
-const noiseMagnitude = 20;
-const noiseSpeed = 0.05;
-
-const colorMap = ["#0000FF", "#00FF00", "#FF0000"];
+const colorMap = ["#ed124f", "#025fdd"];
 const colorSteps = 10;
 const interpolatedColorMap = interpolate(colorMap);
 const interpolatedColorMapMemo = _.memoize(interpolatedColorMap);
@@ -36,10 +30,20 @@ const tempObject3D = new THREE.Object3D();
 const tempColor = new THREE.Color();
 
 const HexagonGrid = () => {
+  const hexHeight = 0.2;
+  const { hexRadius, hexSize, noiseRoughness, noiseMagnitude, noiseSpeed } =
+    useControls("Grid", {
+      hexRadius: { value: 64, min: 6, max: 128, step: 1 },
+      hexSize: { value: 0.95, min: 0.1, max: 1 },
+      noiseRoughness: { value: 0.025, min: 0, max: 0.1 },
+      noiseMagnitude: { value: 20, min: 0.1, max: 100 },
+      noiseSpeed: { value: 0.05, min: 0, max: 1 },
+    });
+
   const hexGridMeshRef = useRef<THREE.InstancedMesh>(null);
   const selectedHex = useRef<number>();
   const ringHexes = useRef<Set<string>>(new Set());
-  const grid = useMemo(() => Grid.spiral({ radius: 64 }), []);
+  const grid = useMemo(() => Grid.spiral({ radius: hexRadius }), [hexRadius]);
   const colorArray = useMemo(
     () =>
       Float32Array.from(

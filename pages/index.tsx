@@ -2,6 +2,7 @@ import React from "react";
 
 import { OrbitControls, Effects } from "@react-three/drei";
 import { Canvas, extend, useThree } from "@react-three/fiber";
+import { useControls } from "leva";
 import { NextPage } from "next";
 import { Perf } from "r3f-perf";
 import { SSAOPass, UnrealBloomPass } from "three-stdlib";
@@ -30,21 +31,32 @@ const PostProcessing = () => {
   );
 };
 
-const Index: NextPage = () => (
-  <Page title="light" description="">
-    <Canvas camera={{ position: [128, 64, 0] }} style={{ height: "100vh" }}>
-      <color attach="background" args={["#000000"]} />
-      <ambientLight intensity={0.5} />
-      <pointLight position={[150, 150, 150]} intensity={0.55} />
+const Index: NextPage = () => {
+  const { background, ambientIntensity, lightIntensity, stats } = useControls(
+    "Scene",
+    {
+      background: "#1b1e3e",
+      ambientIntensity: { value: 0.5, min: 0, max: 2 },
+      lightIntensity: { value: 0.45, min: 0, max: 2 },
+      stats: true,
+    }
+  );
+  return (
+    <Page title="light" description="">
+      <Canvas camera={{ position: [128, 64, 0] }} style={{ height: "100vh" }}>
+        <color attach="background" args={[background]} />
+        <ambientLight intensity={ambientIntensity} />
+        <pointLight position={[150, 150, 150]} intensity={lightIntensity} />
 
-      <HexagonGrid />
+        <HexagonGrid />
 
-      <OrbitControls />
-      <Perf />
+        <OrbitControls />
+        {stats && <Perf position="top-left" />}
 
-      <PostProcessing />
-    </Canvas>
-  </Page>
-);
+        <PostProcessing />
+      </Canvas>
+    </Page>
+  );
+};
 
 export default Index;
