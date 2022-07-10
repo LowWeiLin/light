@@ -1067,16 +1067,6 @@
     suspend-react "^0.0.8"
     zustand "^3.7.1"
 
-"@react-three/postprocessing@^2.4.6":
-  version "2.4.6"
-  resolved "https://registry.yarnpkg.com/@react-three/postprocessing/-/postprocessing-2.4.6.tgz#1dfd6869ea064df36a7e4b770943c74a76a96377"
-  integrity sha512-LxCCtBamNT5uHN8Y1K5ec7ZqdmcIEoWUTWW0ujofX9kode5htk0E2zl8onSXMvRaDsOCMzP5EK3MycLXWgGFuA==
-  dependencies:
-    postprocessing "^6.28.1"
-    react-merge-refs "^1.1.0"
-    screen-space-reflections "^1.0.8"
-    three-stdlib "^2.8.11"
-
 "@rushstack/eslint-patch@^1.1.3":
   version "1.1.4"
   resolved "https://registry.npmjs.org/@rushstack/eslint-patch/-/eslint-patch-1.1.4.tgz"
@@ -3042,11 +3032,6 @@ postcss@8.4.5:
     picocolors "^1.0.0"
     source-map-js "^1.0.1"
 
-postprocessing@^6.28.1:
-  version "6.28.1"
-  resolved "https://registry.yarnpkg.com/postprocessing/-/postprocessing-6.28.1.tgz#b201e6d9c9e1e2af4213a3b81af57ec599f5ed8d"
-  integrity sha512-3KwA5k9IwdB0bpyJ/jK1KnXAk1BJYV1jnywGXJnQXg5trSNVRUq0Gkas2GDIpo+6ThCbwb20NmF6WQOaeyk1Og==
-
 potpack@^1.0.1:
   version "1.0.2"
   resolved "https://registry.npmjs.org/potpack/-/potpack-1.0.2.tgz"
@@ -3306,11 +3291,6 @@ scheduler@^0.23.0:
   dependencies:
     loose-envify "^1.1.0"
 
-screen-space-reflections@^1.0.8:
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/screen-space-reflections/-/screen-space-reflections-1.0.8.tgz#304de62086cdcfa92151a48d19a608539e548586"
-  integrity sha512-UBahDIY3TBds7RIkiGmBMQLZKjBYuAdatOBHEs8jpkSe414cJ66nKNPh/cBFL7ZekTorluNbmxdbJ1GEw/e8xQ==
-
 semver@^6.3.0:
   version "6.3.0"
   resolved "https://registry.npmjs.org/semver/-/semver-6.3.0.tgz"
@@ -3541,7 +3521,7 @@ three-mesh-bvh@^0.5.10:
   resolved "https://registry.npmjs.org/three-mesh-bvh/-/three-mesh-bvh-0.5.14.tgz"
   integrity sha512-rSk7SpKDR47m1PmkUxt5na5+dM4h0KW5zF43lMniZGjT4hQn9Om+g64ooFreFIWlQlrNN8pFqiPnDMRZS58/Yw==
 
-three-stdlib@^2.10.2, three-stdlib@^2.12.1, three-stdlib@^2.8.11:
+three-stdlib@^2.10.2, three-stdlib@^2.12.1:
   version "2.12.1"
   resolved "https://registry.npmjs.org/three-stdlib/-/three-stdlib-2.12.1.tgz"
   integrity sha512-G3SSsCOBiWa0sjjPt+K28ikQ84Plm/ZVUozMfWagK59kZqBWcaPVXpOThkAgvdBpm2zCWLW3edAoW/4XIbljVQ==
@@ -3557,10 +3537,10 @@ three-stdlib@^2.10.2, three-stdlib@^2.12.1, three-stdlib@^2.8.11:
     potpack "^1.0.1"
     zstddec "^0.0.2"
 
-three@0.141.0:
-  version "0.141.0"
-  resolved "https://registry.yarnpkg.com/three/-/three-0.141.0.tgz#16677a12b9dd0c3e1568ebad0fd09de15d5a8216"
-  integrity sha512-JaSDAPWuk4RTzG5BYRQm8YZbERUxTfTDVouWgHMisS2to4E5fotMS9F2zPFNOIJyEFTTQDDKPpsgZVThKU3pXA==
+three@0.140.2:
+  version "0.140.2"
+  resolved "https://registry.yarnpkg.com/three/-/three-0.140.2.tgz#ca0b7390d1ce4f7f2850e80afd00ef48fc244491"
+  integrity sha512-DdT/AHm/TbZXEhQKQpGt5/iSgBrmXpjU26FNtj1KhllVPTKj1eG4X/ShyD5W2fngE+I1s1wa4ttC4C3oCJt7Ag==
 
 through@^2.3.8:
   version "2.3.8"
