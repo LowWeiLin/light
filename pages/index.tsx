@@ -37,7 +37,7 @@ const PostProcessing = () => {
 const Index: NextPage = () => {
   const { backgroundColor, showStats, autoRotate } = useControls("Scene", {
     backgroundColor: { value: "#1b1e3e", label: "Background Colour" },
-    showStats: { value: true, label: "Show Stats" },
+    showStats: { value: false, label: "Show Stats" },
     autoRotate: { value: true, label: "Auto-Rotate" },
   });
   return (
@@ -52,18 +52,18 @@ const Index: NextPage = () => {
           outputEncoding: sRGBEncoding,
         }}
       >
-        {/* <axisHelper /> */}
-        {showStats && <Perf position="top-left" />}
         <color attach="background" args={[backgroundColor]} />
         <Environment preset="sunset" />
         <Lights />
+        <Terrain />
+        <PostProcessing />
+        {/* <axisHelper /> */}
+        <Perf position="bottom-right" headless={!showStats} />
         <OrbitControls
           autoRotate={autoRotate}
           autoRotateSpeed={0.6}
           enablePan={false}
         />
-        <Terrain />
-        <PostProcessing />
       </Canvas>
     </Page>
   );
