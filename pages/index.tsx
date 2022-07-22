@@ -1,14 +1,16 @@
 import React from "react";
 
-import { OrbitControls, Effects } from "@react-three/drei";
+import { OrbitControls, Effects, Environment } from "@react-three/drei";
 import { Canvas, extend, useThree } from "@react-three/fiber";
 import { useControls } from "leva";
 import { NextPage } from "next";
 import { Perf } from "r3f-perf";
+import { PCFSoftShadowMap, sRGBEncoding } from "three";
 import { SSAOPass, UnrealBloomPass } from "three-stdlib";
 
 import Page from "../components/Page";
-import HexagonGrid from "../components/r3f/hexagon/HexagonGrid";
+import Lights from "../components/r3f/Lights";
+import Terrain from "../components/r3f/terrain/Terrain";
 
 extend({ SSAOPass, UnrealBloomPass });
 
@@ -17,6 +19,7 @@ declare global {
     export interface IntrinsicElements {
       sSAOPass: any;
       unrealBloomPass: any;
+      axisHelper: any;
     }
   }
 }
@@ -32,27 +35,34 @@ const PostProcessing = () => {
 };
 
 const Index: NextPage = () => {
-  const { background, ambientIntensity, lightIntensity, stats } = useControls(
-    "Scene",
-    {
-      background: "#1b1e3e",
-      ambientIntensity: { value: 0.5, min: 0, max: 2 },
-      lightIntensity: { value: 0.45, min: 0, max: 2 },
-      stats: true,
-    }
-  );
+  const { backgroundColor, showStats, autoRotate } = useControls("Scene", {
+    backgroundColor: { value: "#1b1e3e", label: "Background Colour" },
+    showStats: { value: true, label: "Show Stats" },
+    autoRotate: { value: true, label: "Auto-Rotate" },
+  });
   return (
     <Page title="light" description="">
-      <Canvas camera={{ position: [128, 64, 0] }} style={{ height: "100vh" }}>
-        <color attach="background" args={[background]} />
-        <ambientLight intensity={ambientIntensity} />
-        <pointLight position={[150, 150, 150]} intensity={lightIntensity} />
-
-        <HexagonGrid />
-
-        <OrbitControls />
-        {stats && <Perf position="top-left" />}
-
+      <Canvas
+        camera={{ position: [128, 64, 0] }}
+        style={{ height: "100vh" }}
+        shadows={{ type: PCFSoftShadowMap }}
+        gl={{
+          antialias: true,
+          toneMappingExposure: 0.5,
+          outputEncoding: sRGBEncoding,
+        }}
+      >
+        {/* <axisHelper /> */}
+        {showStats && <Perf position="top-left" />}
+        <color attach="background" args={[backgroundColor]} />
+        <Environment preset="sunset" />
+        <Lights />
+        <OrbitControls
+          autoRotate={autoRotate}
+          autoRotateSpeed={0.6}
+          enablePan={false}
+        />
+        <Terrain />
         <PostProcessing />
       </Canvas>
     </Page>
