@@ -1,8 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  basePath: process.env.NODE_ENV === "development" ? "" : "/light",
+  basePath: process.env.NODE_ENV === "development" ? undefined : "/light",
   reactStrictMode: true,
-  webpackDevMiddleware: (config) => {
+  webpack: (config) => {
     // eslint-disable-next-line no-param-reassign
     config.watchOptions = {
       poll: 1000,
