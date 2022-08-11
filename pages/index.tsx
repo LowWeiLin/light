@@ -1,6 +1,6 @@
 import React from "react";
 
-import { OrbitControls, Effects, Environment } from "@react-three/drei";
+import { OrbitControls, Effects } from "@react-three/drei";
 import { Canvas, extend, useThree } from "@react-three/fiber";
 import { useControls } from "leva";
 import { NextPage } from "next";
@@ -9,7 +9,9 @@ import { PCFSoftShadowMap, sRGBEncoding } from "three";
 import { SSAOPass, UnrealBloomPass } from "three-stdlib";
 
 import Page from "../components/Page";
+import Drones from "../components/r3f/drones/Drones";
 import Lights from "../components/r3f/Lights";
+import Cursor from "../components/r3f/terrain/Cursor";
 import Terrain from "../components/r3f/terrain/Terrain";
 
 extend({ SSAOPass, UnrealBloomPass });
@@ -37,8 +39,8 @@ const PostProcessing = () => {
 const Index: NextPage = () => {
   const { backgroundColor, showStats, autoRotate } = useControls("Scene", {
     backgroundColor: { value: "#1b1e3e", label: "Background Colour" },
-    showStats: { value: false, label: "Show Stats" },
-    autoRotate: { value: true, label: "Auto-Rotate" },
+    showStats: { value: true, label: "Show Stats" },
+    autoRotate: { value: false, label: "Auto-Rotate" },
   });
   return (
     <Page title="light" description="">
@@ -53,9 +55,10 @@ const Index: NextPage = () => {
         }}
       >
         <color attach="background" args={[backgroundColor]} />
-        <Environment preset="sunset" />
         <Lights />
+        <Cursor />
         <Terrain />
+        <Drones />
         <PostProcessing />
         {/* <axisHelper /> */}
         <Perf position="bottom-right" headless={!showStats} />
